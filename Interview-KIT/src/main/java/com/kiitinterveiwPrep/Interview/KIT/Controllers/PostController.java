@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -27,5 +28,24 @@ public class PostController {
            return new ResponseEntity<>(createPostDto, HttpStatus.CREATED);
 
 
+    }
+    // get by User
+    @GetMapping("/user/{userId}/posts")
+    public  ResponseEntity<List<PostDto>> getPostsByUser(@PathVariable Integer userId){
+
+        List<PostDto> postDtoList = this.postService.getPostsByUser(userId);
+        return ResponseEntity.ok(postDtoList);
+    }
+    //get by Category
+    @GetMapping("/category/{categoryId}/posts")
+    public  ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable Integer categoryId){
+        List<PostDto> postDtoList = this.postService.getPostsByCategory(categoryId);
+        return ResponseEntity.ok(postDtoList);
+    }
+    //get by Company
+    @GetMapping("/company/{companyId}/posts")
+    public  ResponseEntity<List<PostDto>> getPostsByCompany(@PathVariable Integer companyId){
+        List<PostDto> postDtoList = this.postService.getPostByCompany(companyId);
+        return ResponseEntity.ok(postDtoList);
     }
 }
