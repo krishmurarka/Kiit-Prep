@@ -1,5 +1,6 @@
 package com.kiitinterveiwPrep.Interview.KIT.Controllers;
 
+import com.kiitinterveiwPrep.Interview.KIT.Payloads.ApiResponse;
 import com.kiitinterveiwPrep.Interview.KIT.Payloads.PostDto;
 import com.kiitinterveiwPrep.Interview.KIT.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,18 @@ public class PostController {
     public  ResponseEntity<PostDto> getPostById(@PathVariable Integer postId){
         PostDto postDto = this.postService.getPostById(postId);
         return  ResponseEntity.ok(postDto);
+    }
+    // Delete
+
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId){
+        this.postService.deletePost(postId);
+        return new ResponseEntity<ApiResponse>(new ApiResponse("Post Deleted Successfully",true),HttpStatus.OK);
+    }
+    @PutMapping("/posts/{postId}")
+    public  ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable Integer postId){
+        PostDto updatedPost = this.postService.updatePost(postDto,postId);
+
+        return ResponseEntity.ok(updatedPost);
     }
 }
