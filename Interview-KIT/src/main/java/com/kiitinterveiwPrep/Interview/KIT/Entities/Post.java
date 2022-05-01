@@ -1,10 +1,17 @@
 package com.kiitinterveiwPrep.Interview.KIT.Entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name ="post")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Post {
 
     @Id
@@ -16,7 +23,6 @@ public class Post {
 
     @Column(length =10000)
     private String content;
-
 
     private Date addDate;
 

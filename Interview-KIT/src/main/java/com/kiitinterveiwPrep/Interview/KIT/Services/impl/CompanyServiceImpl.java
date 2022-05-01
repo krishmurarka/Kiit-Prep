@@ -23,6 +23,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyDto createCompany(CompanyDto companyDto) {
         Company company = this.dtoToCompany(companyDto);
+
         Company createdCompany = this.companyRepo.save(company);
         return this.CompanyToDto(createdCompany);
     }
