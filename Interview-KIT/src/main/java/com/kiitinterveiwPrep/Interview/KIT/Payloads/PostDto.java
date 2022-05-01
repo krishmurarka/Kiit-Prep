@@ -17,6 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class PostDto {
 
+    private  Integer postId;
     @NotEmpty
     @Size(min = 10, message = "Title Must Contain At least 10 characters")
     private String title;

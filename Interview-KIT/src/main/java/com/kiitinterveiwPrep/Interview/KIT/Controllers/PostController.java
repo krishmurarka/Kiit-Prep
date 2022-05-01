@@ -34,18 +34,32 @@ public class PostController {
     public  ResponseEntity<List<PostDto>> getPostsByUser(@PathVariable Integer userId){
 
         List<PostDto> postDtoList = this.postService.getPostsByUser(userId);
-        return ResponseEntity.ok(postDtoList);
+        return  ResponseEntity.ok(postDtoList);
     }
     //get by Category
     @GetMapping("/category/{categoryId}/posts")
     public  ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable Integer categoryId){
         List<PostDto> postDtoList = this.postService.getPostsByCategory(categoryId);
-        return ResponseEntity.ok(postDtoList);
+        return  ResponseEntity.ok(postDtoList);
     }
     //get by Company
     @GetMapping("/company/{companyId}/posts")
     public  ResponseEntity<List<PostDto>> getPostsByCompany(@PathVariable Integer companyId){
         List<PostDto> postDtoList = this.postService.getPostByCompany(companyId);
+        return  ResponseEntity.ok(postDtoList);
+    }
+    // Get All Posts
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostDto>> getAllPosts(){
+
+        List<PostDto> postDtoList = this.postService.getAllPost();
         return ResponseEntity.ok(postDtoList);
+    }
+
+    // Get Post Details By id
+    @GetMapping("/posts/{postId}")
+    public  ResponseEntity<PostDto> getPostById(@PathVariable Integer postId){
+        PostDto postDto = this.postService.getPostById(postId);
+        return  ResponseEntity.ok(postDto);
     }
 }
