@@ -2,6 +2,7 @@ package com.kiitinterveiwPrep.Interview.KIT.Services;
 
 import com.kiitinterveiwPrep.Interview.KIT.Entities.Post;
 import com.kiitinterveiwPrep.Interview.KIT.Payloads.PostDto;
+import com.kiitinterveiwPrep.Interview.KIT.Payloads.PostResponse;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface PostService {
     void deletePost(Integer postId);
 
     //getAll posts
-    List<PostDto> getAllPost();
+    PostResponse getAllPost(Integer pageNumber, Integer pageSize);
 
     //get single post
 
@@ -26,14 +27,14 @@ public interface PostService {
 
     // get all post by category
 
-    List<PostDto> getPostsByCategory(Integer categoryId);
+    PostResponse getPostsByCategory(Integer categoryId,Integer pageNumber, Integer pageSize);
 
     // get all post by user
-    List<PostDto> getPostsByUser(Integer userId);
+    PostResponse getPostsByUser(Integer userId,Integer pageNumber, Integer pageSize);
 
     // get all post by Company
 
-    List<PostDto> getPostByCompany(Integer companyId);
+    PostResponse getPostByCompany(Integer companyId,Integer pageNumber, Integer pageSize);
 
     //Search Posts
     List<PostDto> searchPosts(String keyword);

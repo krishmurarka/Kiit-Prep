@@ -6,6 +6,7 @@ import com.kiitinterveiwPrep.Interview.KIT.Entities.Post;
 import com.kiitinterveiwPrep.Interview.KIT.Entities.User;
 import com.kiitinterveiwPrep.Interview.KIT.Exceptions.ResourceNotFoundException;
 import com.kiitinterveiwPrep.Interview.KIT.Payloads.PostDto;
+import com.kiitinterveiwPrep.Interview.KIT.Payloads.PostResponse;
 import com.kiitinterveiwPrep.Interview.KIT.Repositories.CategoryRepo;
 import com.kiitinterveiwPrep.Interview.KIT.Repositories.CompanyRepo;
 import com.kiitinterveiwPrep.Interview.KIT.Repositories.PostRepo;
@@ -13,6 +14,9 @@ import com.kiitinterveiwPrep.Interview.KIT.Repositories.UserRepo;
 import com.kiitinterveiwPrep.Interview.KIT.Services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -69,11 +73,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPost() {
-        List<Post> allpost = this.postRepo.findAll();
+    public PostResponse getAllPost(Integer pageNumber, Integer pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+        Page<Post> pagePost = this.postRepo.findAll(pageable);
+        List<Post> allpost = pagePost.getContent();
 
         List<PostDto> postDtoList = allpost.stream().map(post -> PostToDto(post)).collect(Collectors.toList());
-        return postDtoList;
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDtoList);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+
+        return postResponse;
     }
 
     @Override
@@ -84,32 +100,63 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getPostsByCategory(Integer categoryId) {
+    public PostResponse getPostsByCategory(Integer categoryId,Integer pageNumber, Integer pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
 
         Category category = this.categoryRepo.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category"," id",categoryId));
-        List<Post> postList = this.postRepo.findByCategory(category);
+
+        Page<Post> pagePost = this.postRepo.findAllByCategory(category,pageable);
+        List<Post> postList = pagePost.getContent();
 
         List<PostDto> postDtoList = postList.stream().map(post -> this.PostToDto(post)).collect(Collectors.toList());
-        return postDtoList;
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDtoList);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+
+        return postResponse;
     }
 
     @Override
-    public List<PostDto> getPostsByUser(Integer userId) {
-
+    public PostResponse getPostsByUser(Integer userId,Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
         User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User"," id",userId));
-        List<Post> postList = this.postRepo.findByUser(user);
+
+        Page<Post> pagePost = this.postRepo.findAllByUser(user,pageable);
+        List<Post> postList = pagePost.getContent();
         List<PostDto> postDtoList = postList.stream().map(post -> this.PostToDto(post)).collect(Collectors.toList());
 
-        return postDtoList;
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDtoList);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+
+        return postResponse;
     }
 
     @Override
-    public List<PostDto> getPostByCompany(Integer companyId) {
-
+    public PostResponse getPostByCompany(Integer companyId,Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
         Company company = this.companyRepo.findById(companyId).orElseThrow(()-> new ResourceNotFoundException("Company"," id",companyId));
-        List<Post> postList = this.postRepo.findByCompany(company);
+        Page<Post> pagePost = this.postRepo.findAllByCompany(company,pageable);
+        List<Post> postList = pagePost.getContent();
         List<PostDto> postDtoList = postList.stream().map(post -> this.PostToDto(post)).collect(Collectors.toList());
-        return postDtoList;
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDtoList);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+
+        return postResponse;
     }
 
     @Override

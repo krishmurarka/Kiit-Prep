@@ -2,12 +2,12 @@ package com.kiitinterveiwPrep.Interview.KIT.Controllers;
 
 import com.kiitinterveiwPrep.Interview.KIT.Payloads.ApiResponse;
 import com.kiitinterveiwPrep.Interview.KIT.Payloads.PostDto;
+import com.kiitinterveiwPrep.Interview.KIT.Payloads.PostResponse;
 import com.kiitinterveiwPrep.Interview.KIT.Services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -22,39 +22,41 @@ public class PostController {
     public ResponseEntity<PostDto> createPost(@Valid  @RequestBody PostDto postDto, @PathVariable Integer userId,
                                               @PathVariable Integer categoryId, @PathVariable Integer companyId){
 
-
-
            PostDto createPostDto=  this.postService.createPost(postDto,userId,categoryId,companyId);
-
            return new ResponseEntity<>(createPostDto, HttpStatus.CREATED);
-
-
     }
     // get by User
     @GetMapping("/user/{userId}/posts")
-    public  ResponseEntity<List<PostDto>> getPostsByUser(@PathVariable Integer userId){
+    public  ResponseEntity<PostResponse> getPostsByUser(@PathVariable Integer userId,
+                                                         @RequestParam(value = "pageNumber",defaultValue = "0",required = false)Integer pageNumber,
+                                                         @RequestParam(value = "pageSize", defaultValue = "10",required = false) Integer pageSize){
 
-        List<PostDto> postDtoList = this.postService.getPostsByUser(userId);
+        PostResponse postDtoList = this.postService.getPostsByUser(userId,pageNumber,pageSize);
         return  ResponseEntity.ok(postDtoList);
     }
     //get by Category
     @GetMapping("/category/{categoryId}/posts")
-    public  ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable Integer categoryId){
-        List<PostDto> postDtoList = this.postService.getPostsByCategory(categoryId);
+    public  ResponseEntity<PostResponse> getPostsByCategory(@PathVariable Integer categoryId,
+                                                             @RequestParam(value = "pageNumber",defaultValue = "0",required = false)Integer pageNumber,
+                                                             @RequestParam(value = "pageSize", defaultValue = "10",required = false) Integer pageSize){
+        PostResponse postDtoList = this.postService.getPostsByCategory(categoryId,pageNumber,pageSize);
         return  ResponseEntity.ok(postDtoList);
     }
     //get by Company
     @GetMapping("/company/{companyId}/posts")
-    public  ResponseEntity<List<PostDto>> getPostsByCompany(@PathVariable Integer companyId){
-        List<PostDto> postDtoList = this.postService.getPostByCompany(companyId);
+    public  ResponseEntity<PostResponse> getPostsByCompany(@PathVariable Integer companyId,
+                                                            @RequestParam(value = "pageNumber",defaultValue = "0",required = false)Integer pageNumber,
+                                                            @RequestParam(value = "pageSize", defaultValue = "10",required = false) Integer pageSize){
+        PostResponse postDtoList = this.postService.getPostByCompany(companyId,pageNumber,pageSize);
         return  ResponseEntity.ok(postDtoList);
     }
     // Get All Posts
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDto>> getAllPosts(){
+    public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber",defaultValue = "0",required = false)Integer pageNumber,
+                                                     @RequestParam(value = "pageSize", defaultValue = "10",required = false) Integer pageSize){
 
-        List<PostDto> postDtoList = this.postService.getAllPost();
-        return ResponseEntity.ok(postDtoList);
+        PostResponse postResponse = this.postService.getAllPost(pageNumber,pageSize);
+        return ResponseEntity.ok(postResponse);
     }
 
     // Get Post Details By id
