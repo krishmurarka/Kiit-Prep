@@ -19,7 +19,7 @@ public interface PostService {
     void deletePost(Integer postId);
 
     //getAll posts
-    PostResponse getAllPost(Integer pageNumber, Integer pageSize);
+    PostResponse getAllPost(Integer pageNumber, Integer pageSize,String sortBy,String sortDir);
 
     //get single post
 
@@ -27,14 +27,14 @@ public interface PostService {
 
     // get all post by category
 
-    PostResponse getPostsByCategory(Integer categoryId,Integer pageNumber, Integer pageSize);
+    PostResponse getPostsByCategory(Integer categoryId,Integer pageNumber, Integer pageSize,String sortBy,String sortDir);
 
     // get all post by user
-    PostResponse getPostsByUser(Integer userId,Integer pageNumber, Integer pageSize);
+    PostResponse getPostsByUser(Integer userId,Integer pageNumber, Integer pageSize,String sortBy,String sortDir);
 
     // get all post by Company
 
-    PostResponse getPostByCompany(Integer companyId,Integer pageNumber, Integer pageSize);
+    PostResponse getPostByCompany(Integer companyId,Integer pageNumber, Integer pageSize,String sortBy,String sortDir);
 
     //Search Posts
     List<PostDto> searchPosts(String keyword);

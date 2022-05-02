@@ -2,6 +2,7 @@ package com.kiitinterveiwPrep.Interview.KIT.Exceptions;
 
 
 import com.kiitinterveiwPrep.Interview.KIT.Payloads.ApiResponse;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -43,5 +44,12 @@ public class GlobalExceptionHandler {
           message = message + " for this URL";
           ApiResponse apiResponse = new ApiResponse(message,false);
           return  new ResponseEntity<>(apiResponse,HttpStatus.BAD_REQUEST);
+     }
+     @ExceptionHandler(PropertyReferenceException.class)
+     public  ResponseEntity<?> PropertyReferenceException(PropertyReferenceException exception){
+          String message = exception.getMessage();
+          ApiResponse apiResponse = new ApiResponse(message,false);
+          return  new ResponseEntity<>(apiResponse,HttpStatus.BAD_REQUEST);
+
      }
 }
