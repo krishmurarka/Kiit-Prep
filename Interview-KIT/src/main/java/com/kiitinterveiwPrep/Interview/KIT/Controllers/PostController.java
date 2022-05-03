@@ -1,5 +1,6 @@
 package com.kiitinterveiwPrep.Interview.KIT.Controllers;
 
+import com.kiitinterveiwPrep.Interview.KIT.Config.AppConstants;
 import com.kiitinterveiwPrep.Interview.KIT.Payloads.ApiResponse;
 import com.kiitinterveiwPrep.Interview.KIT.Payloads.PostDto;
 import com.kiitinterveiwPrep.Interview.KIT.Payloads.PostResponse;
@@ -28,10 +29,10 @@ public class PostController {
     // get by User
     @GetMapping("/user/{userId}/posts")
     public  ResponseEntity<PostResponse> getPostsByUser(@PathVariable Integer userId,
-                                                        @RequestParam(value = "pageNumber",defaultValue = "0",required = false)Integer pageNumber,
-                                                        @RequestParam(value = "pageSize", defaultValue = "10",required = false) Integer pageSize,
-                                                        @RequestParam(value="sortBy",defaultValue = "postId",required = false)String sortBy,
-                                                        @RequestParam(value="sortDir",defaultValue = "ASC",required = false)String sortDir){
+                                                        @RequestParam(value = "pageNumber",defaultValue = AppConstants.PAGE_NUMBER,required = false)Integer pageNumber,
+                                                        @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE,required = false) Integer pageSize,
+                                                        @RequestParam(value="sortBy",defaultValue = AppConstants.SORT_BY,required = false)String sortBy,
+                                                        @RequestParam(value="sortDir",defaultValue =AppConstants.SORT_DIR,required = false)String sortDir){
 
         PostResponse postDtoList = this.postService.getPostsByUser(userId,pageNumber,pageSize,sortBy,sortDir);
         return  ResponseEntity.ok(postDtoList);
@@ -39,29 +40,29 @@ public class PostController {
     //get by Category
     @GetMapping("/category/{categoryId}/posts")
     public  ResponseEntity<PostResponse> getPostsByCategory(@PathVariable Integer categoryId,
-                                                            @RequestParam(value = "pageNumber",defaultValue = "0",required = false)Integer pageNumber,
-                                                            @RequestParam(value = "pageSize", defaultValue = "10",required = false) Integer pageSize,
-                                                            @RequestParam(value="sortBy",defaultValue = "postId",required = false)String sortBy,
-                                                            @RequestParam(value="sortDir",defaultValue = "ASC",required = false)String sortDir){
+                                                            @RequestParam(value = "pageNumber",defaultValue = AppConstants.PAGE_NUMBER,required = false)Integer pageNumber,
+                                                            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE,required = false) Integer pageSize,
+                                                            @RequestParam(value="sortBy",defaultValue = AppConstants.SORT_BY,required = false)String sortBy,
+                                                            @RequestParam(value="sortDir",defaultValue =AppConstants.SORT_DIR,required = false)String sortDir){
         PostResponse postDtoList = this.postService.getPostsByCategory(categoryId,pageNumber,pageSize,sortBy,sortDir);
         return  ResponseEntity.ok(postDtoList);
     }
     //get by Company
     @GetMapping("/company/{companyId}/posts")
     public  ResponseEntity<PostResponse> getPostsByCompany(@PathVariable Integer companyId,
-                                                            @RequestParam(value = "pageNumber",defaultValue = "0",required = false)Integer pageNumber,
-                                                            @RequestParam(value = "pageSize", defaultValue = "10",required = false) Integer pageSize,
-                                                            @RequestParam(value="sortBy",defaultValue = "postId",required = false)String sortBy,
-                                                            @RequestParam(value="sortDir",defaultValue = "ASC",required = false)String sortDir){
+                                                           @RequestParam(value = "pageNumber",defaultValue = AppConstants.PAGE_NUMBER,required = false)Integer pageNumber,
+                                                           @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE,required = false) Integer pageSize,
+                                                           @RequestParam(value="sortBy",defaultValue = AppConstants.SORT_BY,required = false)String sortBy,
+                                                           @RequestParam(value="sortDir",defaultValue =AppConstants.SORT_DIR,required = false)String sortDir){
         PostResponse postDtoList = this.postService.getPostByCompany(companyId,pageNumber,pageSize,sortBy,sortDir);
         return  ResponseEntity.ok(postDtoList);
     }
     // Get All Posts
     @GetMapping("/posts")
-    public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber",defaultValue = "0",required = false)Integer pageNumber,
-                                                    @RequestParam(value = "pageSize", defaultValue = "10",required = false) Integer pageSize,
-                                                    @RequestParam(value="sortBy",defaultValue = "postId",required = false)String sortBy,
-                                                    @RequestParam(value="sortDir",defaultValue = "ASC",required = false)String sortDir){
+    public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber",defaultValue = AppConstants.PAGE_NUMBER,required = false)Integer pageNumber,
+                                                    @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE,required = false) Integer pageSize,
+                                                    @RequestParam(value="sortBy",defaultValue = AppConstants.SORT_BY,required = false)String sortBy,
+                                                    @RequestParam(value="sortDir",defaultValue =AppConstants.SORT_DIR,required = false)String sortDir){
 
         PostResponse postResponse = this.postService.getAllPost(pageNumber,pageSize,sortBy,sortDir);
         return ResponseEntity.ok(postResponse);
@@ -89,8 +90,12 @@ public class PostController {
 
     //search
     @GetMapping("/posts/search/{keywords}")
-    public  ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable("keywords")String keywords){
-        List<PostDto> searchResult = this.postService.searchPosts(keywords);
+    public  ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable("keywords")String keywords,
+                                                            @RequestParam(value = "pageNumber",defaultValue = AppConstants.PAGE_NUMBER,required = false)Integer pageNumber,
+                                                            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE,required = false) Integer pageSize,
+                                                            @RequestParam(value="sortBy",defaultValue = AppConstants.SORT_BY,required = false)String sortBy,
+                                                            @RequestParam(value="sortDir",defaultValue =AppConstants.SORT_DIR,required = false)String sortDir){
+        List<PostDto> searchResult = this.postService.searchPosts(keywords,pageNumber,pageSize,sortBy,sortDir);
         return ResponseEntity.ok(searchResult);
     }
 

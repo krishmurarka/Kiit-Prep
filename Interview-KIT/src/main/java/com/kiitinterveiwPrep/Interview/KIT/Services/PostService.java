@@ -37,7 +37,7 @@ public interface PostService {
     PostResponse getPostByCompany(Integer companyId,Integer pageNumber, Integer pageSize,String sortBy,String sortDir);
 
     //Search Posts
-    List<PostDto> searchPosts(String keyword);
+    List<PostDto> searchPosts(String keyword,Integer pageNumber, Integer pageSize,String sortBy,String sortDir);
 
 
 
