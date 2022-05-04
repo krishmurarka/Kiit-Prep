@@ -1,6 +1,7 @@
 package com.kiitinterveiwPrep.Interview.KIT.Payloads;
 
 import com.kiitinterveiwPrep.Interview.KIT.Entities.Category;
+import com.kiitinterveiwPrep.Interview.KIT.Entities.Comment;
 import com.kiitinterveiwPrep.Interview.KIT.Entities.Company;
 import com.kiitinterveiwPrep.Interview.KIT.Entities.User;
 import lombok.Getter;
@@ -11,6 +12,8 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,4 +31,6 @@ public class PostDto {
     private CategoryDto category;
     private UserDto user;
     private CompanyDto company;
+
+    private Set<CommentDto> comments = new HashSet<>();
 }
