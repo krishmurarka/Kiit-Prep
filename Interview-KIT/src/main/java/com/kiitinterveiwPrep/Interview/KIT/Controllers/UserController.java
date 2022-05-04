@@ -52,6 +52,8 @@ public class UserController {
     public ResponseEntity<UserDto> getSingleUser(@PathVariable("userId") Integer userId){
         return ResponseEntity.ok(this.userService.getUserById(userId));
     }
+
+
 }
 
 
